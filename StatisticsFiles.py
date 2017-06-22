@@ -1,5 +1,6 @@
 import os
 #coding:utf-8
+
 result=[]
 def get_all(cwd):
     get_dir=os.listdir(cwd)
@@ -8,11 +9,30 @@ def get_all(cwd):
         if os.path.isdir(sub_dir):
             get_all(sub_dir)
         else:
-            ax=os.path.basename(sub_dir)#如果当前路径不是文件夹则把文件名加入列表中
-            result.append(ax)
-            print ("Length:",len(result))#对列表计
-    print (result)
+            if sub_dir.endswith('.java'):
+                ax = os.path.abspath(sub_dir)  # 如果当前路径不是文件夹则把文件名加入列表中
+                result.append(ax)
+                # print sub_dir
+    return result
+def get_all_suffix(targetDir,suffix):
+    # print ('targetDir:'+targetDir+'|suffix:'+suffix)
+    get_dir=os.listdir(targetDir)
+    for i in get_dir:
+        sub_dir=os.path.join(targetDir,i)
+        if os.path.isdir(sub_dir):
+            get_all_suffix(sub_dir,suffix)
+        else:
+            if sub_dir.endswith('.'+suffix):
+                ax = os.path.abspath(sub_dir)  # 如果当前路径不是文件夹则把文件名加入列表中
+                result.append(ax)
+    return result
+# targetDir=raw_input('请输入目录\n')
+# print (get_all_suffix(targetDir,'java'))
+# finalResult=get_all(targetDir)
 
-cur_path=os.getcwd()
-print (cur_path)
-get_all(cur_path)
+
+
+# print (finalResult)
+# print (test_sum(1,3))
+# cur_path=os.getcwd()
+# print (cur_path)
